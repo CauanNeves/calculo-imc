@@ -5,15 +5,13 @@ from time import sleep
 
 
 def prompt_cls():
-    '''Limpa a tela do terminal.'''
+    #Limpa o terminal
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def navbar():
-    '''Exibe a barra de navegação no terminal.'''
     print(f"{Fore.CYAN + Style.BRIGHT + '=' * 40}\n{Fore.GREEN + Style.BRIGHT + 'Calculo de IMC'.center(40)}\n{Fore.CYAN + Style.BRIGHT + '=' * 40}")
 
 def pausar():
-    '''Pausa a execução e aguarda o usuário pressionar Enter.'''
     input(Fore.YELLOW + 'Pressione qualquer tecla para continuar...')
 
 def exibir_menu():
@@ -24,7 +22,6 @@ def exibir_menu():
         ['3', 'Fechar Programa']
     ]
 
-    '''Exibe o menu com formatação aprimorada.'''
     prompt_cls()
     navbar()
     print(tabulate(opcoes_menu, headers=['Opção', 'Descrição'], tablefmt='fancy_grid'))
@@ -40,7 +37,6 @@ def exibir_tabela():
         ['Acima de 40', 'Obesidade III (mórbida)']
     ]
 
-    '''Exibe o menu com formatação aprimorada.'''
     prompt_cls()
     navbar()
     print(tabulate(opcoes_menu, headers=['IMC', 'Situação'], tablefmt='fancy_grid'))
