@@ -88,7 +88,7 @@ def main():
     peso, altura = pedir_dados()
 
     while True:
-        result = calc_imc(peso, altura)
+        imc, result = calc_imc(peso, altura)
 
         exibir_menu()
         action= None
@@ -102,7 +102,8 @@ def main():
             exibir_tabela()
             pausar()
         elif action == 1:
-            print(result)
+            print(f'Seu IMC é: {imc}')
+            print(f'Sua situação é: {result}')
             pausar()
         elif action == 2:
             peso, altura = pedir_dados()
