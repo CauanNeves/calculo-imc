@@ -1,117 +1,65 @@
-import os
-from colorama import Fore, Style, init
-from tabulate import tabulate
-from time import sleep
+import PySimpleGUI as sg
+
+#tema
+sg.theme('BrownBlue')
+#layout
+top_row= ['IMC', 'Classificações']
+rows= [
+    ['< 17', 'Muito Abaixo do Peso'],
+    ['17 - 18,5', 'Abaixo do Peso'],
+    ['18,5 - 24,9', 'Peso Normal'],
+    ['25 - 29,9', 'Acima do peso'],
+    ['30 - 34,9', 'Obesidade I '],
+    ['35 - 39,9', 'Obesidade II (severa)'],
+    ['> 40', 'Obesidade III (mórbida)']
+]
 
 
-def prompt_cls():
-    #Limpa o terminal
-    os.system('cls' if os.name == 'nt' else 'clear')
 
-def navbar():
-    print(f"{Fore.CYAN + Style.BRIGHT + '=' * 40}\n{Fore.GREEN + Style.BRIGHT + 'Calculo de IMC'.center(40)}\n{Fore.CYAN + Style.BRIGHT + '=' * 40}")
+main_layout = [
+    [sg.Table(values=rows, headings=top_row, justification='center', 
+              hide_vertical_scroll=True, expand_x=True, num_rows=7, row_height=25)],
 
-def pausar():
-    input(Fore.YELLOW + 'Pressione qualquer tecla para continuar...')
+    [sg.Text('Altura (m): '), sg.Input(key='altura', size=(5, 1)), 
+     sg.Text('Peso (kg): '), sg.Input(key='peso', size=(5, 1)), 
+     sg.Button('Calcular', key='btn_calc')],
 
-def exibir_menu():
-    opcoes_menu= [
-        ['0', 'Exibir tabela do IMC'],
-        ['1', 'Exibir resultado do IMC'],
-        ['2', 'Fazer um novo cálculo'],
-        ['3', 'Fechar Programa']
-    ]
+    [sg.Text(key='result', size=(40, 1))],
+    [sg.Text(key='imc', expand_x=True, justification='center')]
+]
 
-    prompt_cls()
-    navbar()
-    print(tabulate(opcoes_menu, headers=['Opção', 'Descrição'], tablefmt='fancy_grid'))
-
-def exibir_tabela():
-    opcoes_menu= [
-        ['Abaixo de 17', 'Muito abaixo do peso'],
-        ['Entre 17 e 18,5', 'Abaixo do Peso'],
-        ['Entre 18,5 e 24,9', 'Peso normal'],
-        ['Entre 25 e 29,9', 'Acima do peso'],
-        ['Entre 30 e 34,5', 'Obesidade I'],
-        ['Entre 35 e 39,9', 'Obesidade II (severa)'],
-        ['Acima de 40', 'Obesidade III (mórbida)']
-    ]
-
-    prompt_cls()
-    navbar()
-    print(tabulate(opcoes_menu, headers=['IMC', 'Situação'], tablefmt='fancy_grid'))
-
-def calc_imc(peso, altura):
-    imc = peso / (altura * altura)
-
-    result = ''
-    if imc < 17:
-        result = Fore.YELLOW + 'Muito abaixo do peso'
-    elif imc >= 17 and imc < 18.5:
-        result = 'Abaixo do peso'
-    elif imc >= 18.5 and imc <= 24.9:
-        result = Fore.GREEN + 'Peso normal'
-    elif imc >= 25 and imc <= 29.9:
-        result= 'Acima do peso'
-    elif imc >= 30 and imc <= 34.9:
-        result= Fore.RED + 'Obesidade I'
-    elif imc >= 35 and imc <= 39.9:
-        result= Fore.RED + 'Obesidade II (Severa)'
-    elif imc >= 40:
-        result= Fore.RED + 'Obesidade III (mórbida)'
-
-    return imc, result
-
-
-def pedir_dados():
-    peso = None
-    altura = None
-    
-    while peso == None:
+#Janela
+window= sg.Window('Calculadora de IMC', layout= main_layout, element_justification='c')
+#leitura de eventos e valores
+while True:
+    event, values = window.read()
+    #ler e reagir
+    if event == sg.WIN_CLOSED:
+        break
+    elif event == 'btn_calc':
         try:
-            prompt_cls()
-            peso = float(input(Fore.BLUE + 'Informe seu peso corporal em Kg: '))
-        except:
-            print(Fore.RED + 'O peso corporal precisa ser em kg, por exemplo: 55.3')
-            sleep(2)
+            altura = float(values['altura'].replace(',', '.'))
+            peso = float(values['peso'].replace(',', '.'))
+            imc = peso / (altura ** 2)
+            window['result'].update('O seu IMC é igual a:', text_color= 'white')
 
-    while altura == None:
-        try:
-            prompt_cls()
-            altura = float(input(Fore.BLUE + 'Informe a sua altura em metros: '))
-        except:
-            print(Fore.RED + 'A altura precisa ser em metros, por exemplo: 1.80')
-            sleep(2)
-    return peso, altura
+            imc_ranges = [
+                (0, 17, 'medium slate blue'),
+                (17, 18.5, 'light slate blue'),
+                (18.5, 25, 'forest green'),
+                (25, 30, 'yellow', 'blue'),
+                (30, 35, 'orange'),
+                (35, 40, 'orange red'),
+                (40, float('inf'), 'red')
+            ]
+            imc_class = ''
+            for min_imc, max_imc, text_color, *bg_color in imc_ranges:
+                if min_imc <= imc < max_imc:
+                    imc_class = rows[imc_ranges.index((min_imc, max_imc, text_color, *bg_color))][1]
+                    window['imc'].update(f'{imc:,.2f} ({imc_class})', text_color=text_color, background_color=bg_color[0] if bg_color else 'white')
+                    break
 
-def main():
-    peso, altura = pedir_dados()
-
-    while True:
-        imc, result = calc_imc(peso, altura)
-
-        exibir_menu()
-        action= None
-        while action == None:
-                try:
-                    action= int(input(Fore.BLUE + 'Selecione o número da opção que deseja: '))
-                except:
-                    pass
-
-        if action == 0:
-            exibir_tabela()
-            pausar()
-        elif action == 1:
-            print(f'Seu IMC é: {imc}')
-            print(f'Sua situação é: {result}')
-            pausar()
-        elif action == 2:
-            peso, altura = pedir_dados()
-            prompt_cls()
-        elif action == 3:
-            break
-        else:
-            pass
-
-if __name__ == '__main__':
-    main()
+            window['result'].update(f'Seu IMC é {imc:,.2f} - {imc_class}', text_color='white')
+            
+        except ValueError:
+            window['result'].update('Os campos acima não podem ser vazios', text_color= 'red')
