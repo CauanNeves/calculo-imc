@@ -15,17 +15,19 @@ rows= [
 ]
 
 
-
-main_layout = [
-    [sg.Table(values=rows, headings=top_row, justification='center', 
-              hide_vertical_scroll=True, expand_x=True, num_rows=7, row_height=25)],
-
+frame_calc= [
     [sg.Text('Altura (m): '), sg.Input(key='altura', size=(5, 1)), 
      sg.Text('Peso (kg): '), sg.Input(key='peso', size=(5, 1)), 
      sg.Button('Calcular', key='btn_calc')],
 
-    [sg.Text(key='result', size=(40, 1))],
-    [sg.Text(key='imc', expand_x=True, justification='center')]
+    [sg.Text(key='result', expand_x=True, justification='center')]
+]
+
+main_layout = [
+    [sg.Table(values=rows, headings=top_row, justification='center', 
+              hide_vertical_scroll=True, expand_x=True, num_rows=7, row_height=25)],
+    [sg.Frame('Calcular IMC', frame_calc)]
+
 ]
 
 #Janela
@@ -38,10 +40,10 @@ while True:
         break
     elif event == 'btn_calc':
         try:
+            window['result'].update('')
             altura = float(values['altura'].replace(',', '.'))
             peso = float(values['peso'].replace(',', '.'))
             imc = peso / (altura ** 2)
-            window['result'].update('O seu IMC é igual a:', text_color= 'white')
 
             imc_ranges = [
                 (0, 17, 'medium slate blue'),
@@ -56,10 +58,8 @@ while True:
             for min_imc, max_imc, text_color, *bg_color in imc_ranges:
                 if min_imc <= imc < max_imc:
                     imc_class = rows[imc_ranges.index((min_imc, max_imc, text_color, *bg_color))][1]
-                    window['imc'].update(f'{imc:,.2f} ({imc_class})', text_color=text_color, background_color=bg_color[0] if bg_color else 'white')
+                    window['result'].update(f'Seu IMC é {imc:,.2f} ({imc_class})', text_color=text_color, background_color=bg_color[0] if bg_color else 'white')
                     break
-
-            window['result'].update(f'Seu IMC é {imc:,.2f} - {imc_class}', text_color='white')
             
         except ValueError:
             window['result'].update('Os campos acima não podem ser vazios', text_color= 'red')
