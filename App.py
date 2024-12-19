@@ -14,7 +14,7 @@ rows= [
     ['> 40', 'Obesidade III (mórbida)']
 ]
 
-
+#Separando a aba IMC
 frame_calc= [
     [sg.Text('Altura (m): '), sg.Input(key='altura', size=(5, 1)), 
      sg.Text('Peso (kg): '), sg.Input(key='peso', size=(5, 1)), 
@@ -23,15 +23,33 @@ frame_calc= [
     [sg.Text(key='result', expand_x=True, justification='center')]
 ]
 
-main_layout = [
+tab_imc = [
     [sg.Table(values=rows, headings=top_row, justification='center', 
               hide_vertical_scroll=True, expand_x=True, num_rows=7, row_height=25)],
     [sg.Frame('Calcular IMC', frame_calc)]
 
 ]
 
+tab_txbasal= [
+    [sg.Column(
+        [[sg.Text('Em breve', text_color= 'yellow')]], 
+        justification='center',  
+        element_justification='center', 
+        expand_x=True, 
+        expand_y=True
+    )]
+]
+
+main_layout= [
+    [sg.TabGroup([
+        #Uma lista para cada tab
+        [sg.Tab('IMC', tab_imc)],
+        [sg.Tab('Taxa Basal', tab_txbasal)]
+    ])]
+]
+
 #Janela
-window= sg.Window('Calculadora de IMC', layout= main_layout, element_justification='c')
+window= sg.Window('Calculadora de IMC', layout= main_layout, element_justification='c', resizable=True)
 #leitura de eventos e valores
 while True:
     event, values = window.read()
