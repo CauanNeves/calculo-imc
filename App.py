@@ -11,7 +11,7 @@ rows= [
     ['< 17', 'Muito Abaixo do Peso'],
     ['17 - 18,5', 'Abaixo do Peso'],
     ['18,5 - 24,9', 'Peso Normal'],
-    ['25 - 29,9', 'Acima do weight'],
+    ['25 - 29,9', 'Acima do Peso'],
     ['30 - 34,9', 'Obesidade I '],
     ['35 - 39,9', 'Obesidade II (severa)'],
     ['> 40', 'Obesidade III (mórbida)']
@@ -23,20 +23,25 @@ frame_calc= [
      sg.Text('Peso (kg): '), sg.Input(key='weight', size=(5, 1)), 
      sg.Button('Calcular', key='btn_calc_imc')],
 
-    [sg.Text(key='result', expand_x=True, justification='center')]
+    [sg.Text(key='result', expand_x=True, justification= 'c', expand_y= True)]
 ]
 
 #tabela
 tab_imc = [
     [sg.Table(values=rows, headings=top_row, justification='center', 
               hide_vertical_scroll=True, expand_x=True, num_rows=7, row_height=25)],
-    [sg.Frame('Calcular IMC', frame_calc)]
+    [sg.Frame('Calcular IMC', frame_calc, expand_x= True, element_justification= 'c', expand_y= True)]
 
 ]
 
 #Taxa Basal
 frame_result_tb= [
-    [sg.Text('Este é o seu gasto calórico basal: '), sg.Text('', key= 'result_tb')],
+    [sg.Text('', key= 'txt_result_tb'), sg.Text('', key= 'result_tb')],
+    [sg.Text('O ideal, para calcular o peso, é que seja em jejum logo pela manhã. Calcule todos os dias durante uma semana e depois tire uma média.',
+              size=(45, None))
+     ],
+    [sg.Text('A taxa metabólica basal, conhecida também como gasto energético basal, é a quantidade de energia que o corpo, em repouso, gasta para manter as suas funções vitais, como respiração, batimentos do coração e manutenção da temperatura corporal.',
+             size= (45, None))]
 ]
 
 tab_txbasal= [
@@ -101,6 +106,7 @@ while True:
             
             if values['radio_male'] == True:
                 tmb_male= 66 + (13.7 * weight) + (5 * height) - (6.8 * age)
+                window['txt_result_tb'].update('Este é o seu gasto calórico basal: ')
                 window['result_tb'].update(f'{tmb_male:,.2f}', text_color= 'green', background_color= 'white')
             else:
                 tmb_female = 655 + (9.6 * weight) + (1.8 * height) - (4.7 * age)
@@ -110,4 +116,3 @@ while True:
 
 
 
-#O ideal, para calcular o peso, é que seja em jejum logo pela manhã. Calcule todos os dias durante uma semana e depois tire uma média.
