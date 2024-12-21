@@ -1,15 +1,50 @@
-# Calculadora de IMC (Índice de Massa Corporal) 🧑‍⚕️📊
+# 📊 Calculadora de IMC e Taxa Metabólica Basal 🚀
 
-Este é um programa simples em Python para calcular o **Índice de Massa Corporal** (IMC), uma medida usada para avaliar se uma pessoa está no peso ideal, subpeso, sobrepeso ou obesidade, com base em sua altura e peso.
+## 📝 Descrição
+Este projeto é uma aplicação gráfica desenvolvida em Python usando a biblioteca **PySimpleGUI**. Ele permite calcular o **Índice de Massa Corporal (IMC)** e a **Taxa Metabólica Basal (TMB)** com base nos dados fornecidos pelo usuário.
 
-## Funcionalidades ⚙️
+## 🌟 Funcionalidades
+- **📏 Cálculo de IMC:** Insira altura e peso para calcular seu IMC e receber uma classificação com base nos valores.
+- **📋 Tabela de Classificação IMC:** Consulte uma tabela com as faixas de classificação do IMC.
+- **🔥 Cálculo de Taxa Metabólica Basal (TMB):** Insira altura, peso, idade e selecione o gênero para calcular sua TMB.
+- **🖥️ Interface Gráfica Intuitiva:** Navegue entre abas separadas para IMC e TMB.
 
-- Calcula o IMC de uma pessoa a partir de sua altura e peso.
-- Classifica o IMC em diferentes categorias:
-  - Muito Abaixo do peso 💀
-  - Abaixo do peso 🏃‍♂️
-  - Peso normal ⚖️
-  - Acima do peso 🍔
-  - Obesidade I 🍩
-  - Obesidade II (sevéra) 🍟
-  - Obesidade III (mórbida) 🍕
+## 🛠️ Tecnologias Utilizadas
+- **🐍 Python 3.11.7**
+- **🎨 PySimpleGUI**
+
+## 🚀 Como Executar o Projeto
+1. Clone este repositório:
+   ```bash
+   git clone https://github.com/CauanNeves/calculo-imc.git
+   ```
+2. Instale as dependências:
+   ```bash
+   pip install PySimpleGUI
+   ```
+3. Execute o programa:
+   ```bash
+   python App.py
+   ```
+
+## 🧠 Como Usar
+### 🧮 Aba IMC
+1. Insira sua **📐 Altura (m)** e **⚖️ Peso (kg)**.
+2. Clique no botão **🟢 Calcular**.
+3. Veja seu resultado exibido com a classificação e cor correspondente.
+
+### 💪 Aba Taxa Basal
+1. Selecione seu **⚤ Gênero**.
+2. Insira **📐 Altura (m)**, **⚖️ Peso (kg)** e **🎂 Idade**.
+3. Clique em **🟢 Calcular**.
+4. Veja o resultado exibido.
+
+## 🤝 Contribuição
+Contribuições são bem-vindas! Sinta-se à vontade para abrir um **pull request**.
+
+
+## 👤 Autor
+- **Cauan Neves** - [💼 LinkedIn](https://www.linkedin.com/in/cauan-neves-65916a228/)
+
+---
+*Feito com 🐍 e PySimpleGUI 💻.*
