@@ -48,3 +48,8 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir um **pull reques
 
 ---
 *Feito com 🐍 e PySimpleGUI 💻.*
+
+<video width="800" controls>
+  <source src="/demo.mp4" type="demonstracao">
+  Seu navegador não suporta vídeos.
+</video>

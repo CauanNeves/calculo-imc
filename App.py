@@ -96,7 +96,7 @@ while True:
                     break
             
         except ValueError:
-            window['result'].update('Os campos acima não podem ser vazios', text_color= 'red')
+            window['result'].update('Os campos acima estão incorretos.\n Não podem ser vazios e não pode conter letras.', text_color= 'red')
             
     elif event == 'btn_calc_tb':
         try:
@@ -113,6 +113,3 @@ while True:
                 window['result_tb'].update(f'{tmb_female:,.2f}', text_color= 'green', background_color= 'white')
         except:
             sg.popup('Os campos não podem ser vazios')
-
-
-
